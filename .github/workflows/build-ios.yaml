@@ -38,24 +38,28 @@ jobs:
           repository: ${{ secrets.CHECKOUT_REPOSITORY }}
           ref: ${{ github.event.inputs.channel == 'development' && 'develop' || github.event.inputs.channel == 'preview' && 'staging' || github.event.inputs.channel == 'production' && 'main' }}
           ssh-key: ${{ secrets.CHECKOUT_SSH_KEY }}
-  
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-  
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'pnpm'
-  
+          cache: "pnpm"
+
       - name: Setup EAS
         run: pnpm add -g eas-cli
-      
+
       - name: Install dependencies
         run: pnpm install
 
       - name: Build iOS
-        run: EXPO_PUBLIC_EXTRA_EAS_PROJECT_ID=${{ env.EXPO_PUBLIC_EXTRA_EAS_PROJECT_ID }} EXPO_PUBLIC_SLUG=${{ env.EXPO_PUBLIC_SLUG }} EXPO_TOKEN=${{ secrets.EXPO_TOKEN }} eas build --platform=ios --profile=${{ github.event.inputs.channel }} --build-logger-level=${{ github.event.inputs.build_logger_level }} --local --output=app-release.ipa --non-interactive
+        run: >
+          EXPO_PUBLIC_EXTRA_EAS_PROJECT_ID=${{ secrets.EXPO_PUBLIC_EXTRA_EAS_PROJECT_ID }} 
+          EXPO_PUBLIC_SLUG=${{ secrets.EXPO_PUBLIC_SLUG }} 
+          EXPO_TOKEN=${{ secrets.EXPO_TOKEN }} 
+          eas build --platform=ios --profile=${{ github.event.inputs.channel }} --build-logger-level=${{ github.event.inputs.build_logger_level }} --local --output=app-release.ipa --non-interactive
         working-directory: apps/expo
 
       - name: Upload app to TestFlight
