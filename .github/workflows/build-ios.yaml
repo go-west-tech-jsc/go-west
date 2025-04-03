@@ -55,7 +55,7 @@ jobs:
         run: pnpm install
 
       - name: Build iOS
-        run: EXPO_PUBLIC_EXTRA_EAS_PROJECT_ID=${{ github.env.EXPO_PUBLIC_EXTRA_EAS_PROJECT_ID }} EXPO_PUBLIC_SLUG=${{ github.env.EXPO_PUBLIC_SLUG }} EXPO_TOKEN=${{ secrets.EXPO_TOKEN }} eas build --platform=ios --profile=${{ github.event.inputs.channel }} --build-logger-level=${{ github.event.inputs.build_logger_level }} --local --output=app-release.ipa --non-interactive
+        run: EXPO_PUBLIC_EXTRA_EAS_PROJECT_ID=${{ env.EXPO_PUBLIC_EXTRA_EAS_PROJECT_ID }} EXPO_PUBLIC_SLUG=${{ env.EXPO_PUBLIC_SLUG }} EXPO_TOKEN=${{ secrets.EXPO_TOKEN }} eas build --platform=ios --profile=${{ github.event.inputs.channel }} --build-logger-level=${{ github.event.inputs.build_logger_level }} --local --output=app-release.ipa --non-interactive
         working-directory: apps/expo
 
       - name: Upload app to TestFlight
