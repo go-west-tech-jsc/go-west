@@ -56,9 +56,9 @@ jobs:
 
       - name: Build iOS
         run: >
-          EXPO_PUBLIC_EXTRA_EAS_PROJECT_ID=${{ secrets.EXPO_PUBLIC_EXTRA_EAS_PROJECT_ID }} 
-          EXPO_PUBLIC_SLUG=${{ secrets.EXPO_PUBLIC_SLUG }} 
-          EXPO_TOKEN=${{ secrets.EXPO_TOKEN }} 
+          EXPO_PUBLIC_EXTRA_EAS_PROJECT_ID=${{ secrets.EXPO_PUBLIC_EXTRA_EAS_PROJECT_ID }}
+          EXPO_PUBLIC_SLUG=${{ secrets.EXPO_PUBLIC_SLUG }}
+          EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}
           eas build --platform=ios --profile=${{ github.event.inputs.channel }} --build-logger-level=${{ github.event.inputs.build_logger_level }} --local --output=app-release.ipa --non-interactive
         working-directory: apps/expo
 
